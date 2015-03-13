@@ -1,0 +1,14 @@
+BotConfig
+{ server = "myserver"
+, user = "myuser"
+, pass = "mypass"
+, max_msg_length = 300
+, no_output_msg = " "
+, blacklist = []
+, rate_limit_messages = 5
+, rate_limit_window = 10
+, rooms =
+  [ ("geordi@conference.jabber.org", RoomConfig
+    { room_nick = "mynick", allow_nickless_requests = False })
+  ]
+}

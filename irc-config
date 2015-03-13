@@ -1,0 +1,21 @@
+IrcBotConfig
+{ server = "irc.freenode.net"
+, port = 6667
+, password = Nothing
+, max_response_length = 300
+, chans = ["#geordi", "#otherchannel"]
+, key_chans = []
+, nick = "geordiclone"
+, nick_pass = Nothing
+, alternate_nick = "geordiclone_"
+, also_respond_to = []
+, allow_short_request_syntax_in = []
+, blacklist = []
+, no_output_msg = " "
+, channel_response_prefix = ""
+, join_trigger = Nothing
+, censor = []
+, rate_limit_messages = 5
+, rate_limit_window = 10
+, serve_private_requests = False
+}

@@ -1,0 +1,79 @@
+name: geordi
+version: 0
+cabal-version: >= 1.2
+license: PublicDomain
+homepage: http://www.eelis.net/geordi/
+maintainer: geordi@contacts.eelis.net
+bug-reports: mailto:geordi@contacts.eelis.net
+package-url: http://www.eelis.net/geordi/snapshots/
+build-type: Custom
+
+data-files: jail-config compile-config prelude/*.hpp prelude/*.cpp
+
+flag irc
+  description: Build IRC front end
+  default: True
+  manual: True
+
+flag xmpp
+  description: Build XMPP front end
+  default: False
+
+flag testsuite
+  description: Build test suite
+  default: True
+
+executable geordi-mkrt
+  extensions: UnicodeSyntax
+  main-is: Mkrt.hs
+  hs-source-dirs: src
+  build-depends: filepath, process, base>=4, parallel, mtl, syb, unix, utf8-string, network, containers, readline, parsec<3, Diff, directory, regex-compat, base-unicode-symbols>=0.1.4, setops>=0.1, NonEmptyList>=0.0.8, Semigroup>=0.0.2
+
+executable geordi-local
+  other-modules: Sys, EvalCxx, SysCalls, Flock, Ptrace
+  ghc-options: -Wall -fno-warn-unused-binds -fno-warn-unused-do-bind -fno-warn-orphans
+  extensions: UnicodeSyntax
+  build-tools: hsc2hs
+  build-depends: base>=4, parallel, mtl, syb, unix, utf8-string, network, containers, readline, parsec<3, Diff, directory, regex-compat, base-unicode-symbols>=0.1.4, setops>=0.1, NonEmptyList>=0.0.8, Semigroup>=0.0.2
+  main-is: Local.hs
+  hs-source-dirs: src
+
+executable geordi-testsuite
+  main-is: Testsuite.hs
+  if flag(testsuite)
+    other-modules: Sys, EvalCxx, SysCalls, Flock, Ptrace
+    ghc-options: -Wall -fno-warn-unused-binds -fno-warn-unused-do-bind -fno-warn-orphans
+    extensions: UnicodeSyntax
+    build-tools: hsc2hs
+    build-depends: base>=4, parallel, mtl, syb, unix, utf8-string, network, containers, parsec<3, Diff, directory, regex-compat, base-unicode-symbols>=0.1.4, setops>=0.1, NonEmptyList>=0.0.8, Semigroup>=0.0.2
+    hs-source-dirs: src
+  else
+    buildable: False
+
+executable geordi-irc
+  main-is: IrcBot.hs
+  if flag(irc)
+    other-modules: Sys, EvalCxx, SysCalls, Flock, Ptrace
+    ghc-options: -Wall -fno-warn-unused-binds -fno-warn-unused-do-bind -fno-warn-orphans
+    extensions: UnicodeSyntax
+    build-tools: hsc2hs
+    build-depends: base>=4, parallel, mtl, syb, unix, utf8-string, network, containers, parsec<3, Diff, directory, regex-compat, irc, bytestring, base-unicode-symbols>=0.1.4, setops>=0.1, NonEmptyList>=0.0.8, Semigroup>=0.0.2
+    hs-source-dirs: src
+  else
+    buildable: False
+
+executable geordi-xmpp
+  main-is: XmppBot.hs
+  if flag(xmpp)
+    other-modules: Sys, EvalCxx, SysCalls, Flock, Ptrace
+    ghc-options: -Wall -fno-warn-unused-binds -fno-warn-unused-do-bind -fno-warn-orphans
+    extensions: UnicodeSyntax
+    build-tools: hsc2hs
+    build-depends: base, parallel, mtl, syb, unix, utf8-string, network, containers, parsec<3, Diff, directory, regex-compat, XMPP, base-unicode-symbols>=0.1.4, setops>=0.1
+    hs-source-dirs: src
+  else
+    buildable: False
+
+source-repository head
+  type: git
+  location: http://github.com/Eelis/geordi.git
